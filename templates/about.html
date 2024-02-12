@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
 
-    {{ company }}
-    
+
+
     <h2>{{ page_title }}</h2>
     <p>
         Shmetflix is a subscription-based streaming service that allows our members to watch TV shows and movies on an
@@ -14,32 +14,42 @@
         If you're already a member and would like to learn more about using Shmetflix, visit Getting started with Shmetflix.
     </p>
 
-    <div class="row featurette">
-        <div class="col-md-7">
-            <h3>TV Shows & Movies</h3>
-            <p>
-                Shmetflix content varies by region and may change over time. You can watch a variety of award-winning Shmetflix
-                originals, TV shows, movies, documentaries, and more.
-                The more you watch, the better Shmetflix gets at recommending TV shows and movies.
-            </p>
-        </div>
-        <div class="col-md-5">
-            <img src="https://cdn.c21media.net/wp-content/uploads/2022/03/netflix-poland-art-feat.jpg" alt="">
-        </div>
+    {% for member in company %}
 
         <div class="row featurette">
-            <div class="col-md-5">
-                <img src="static/img/multiple-devices.jpeg.png" alt="">
-            </div>
-            <div class="col-md-7">
-                <h3>Supported Devices</h3>
-                <p>
-                    You can watch Shmetflix through any internet-connected device that offers the Shmetflix app, including smart TVs,
-                    game consoles, streaming media players, set-top boxes, smartphones, and tablets. You can also watch Shmetflix on
-                    your computer using an internet browser. You can review the system requirements for web browser compatibility, and
-                    check our internet speed recommendations to achieve the best performance.
-                </p>
-            </div>
+
+            {% if loop.index % 2 != 0 %}
+                <div class="col-md-7">
+                    <h3><a href="/about/{{ member.url }}">{{ loop.index }}. {{ member.name }}</a></h3>
+                    <p>{{ member.description }}</p>
+                </div>
+                <div class="col-md-5">
+                    <img src="{{ member.image_source }}" alt="" class="featurette-image image-responsive">
+                </div>
+
+            {% else %}
+
+                <div class="col-md-5">
+                    <img src="{{ member.image_source }}" alt="" class="featurette-image image-responsive">
+                </div>
+                <div class="col-md-7">
+                    <h3><a href="/about/{{ member.url }}">{{ loop.index }}. {{ member.name }}</a></h3>
+                    <p>{{ member.description }}</p>
+                </div>
+
+            {% endif %}
+
+        </div>
+
+        {% if loop.index != loop.length %}
+
+            <hr class="featurette-divider">
+
+        {% endif %}
+
+    {% endfor %}
+
+
 
 
 
